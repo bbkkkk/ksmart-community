@@ -1,4 +1,4 @@
-# Springboot2.4+HikariDataSource多数据源+DDS注解数据源切换+Swagger3.0
+#  Springboot2.4+HikariDataSource多数据源+JPA+MyBatisPlus+DDS注解数据源切换+Swagger3.0
 ## 框架约定
 
 ### 应用分层（参考阿里巴巴Java开发手册）
