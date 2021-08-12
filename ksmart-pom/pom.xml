@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>ksmart</groupId>
+    <artifactId>ksmart-pom</artifactId>
+    <version>0.0.1</version>
+    <name>ksmart-pom</name>
+    <packaging>pom</packaging>
+    <description>pom project for ksmart</description>
+    <properties>
+        <java.version>11</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <mysql.version>5.1.47</mysql.version>
+        <ksmart-common.version>0.0.1</ksmart-common.version>
+        <ksmart.version>0.0.1</ksmart.version>
+        <swagger.version>3.0.0</swagger.version>
+        <collections4.version>4.4</collections4.version>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>3.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${collections4.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ksmart</groupId>
+                <artifactId>ksmart-common</artifactId>
+                <version>${ksmart.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ksmart</groupId>
+                <artifactId>ksmart-framework-dds</artifactId>
+                <version>${ksmart.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ksmart</groupId>
+                <artifactId>ksmart-pms-api</artifactId>
+                <version>${ksmart.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ksmart</groupId>
+                <artifactId>ksmart-demo-api</artifactId>
+                <version>${ksmart.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>1.2.6</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-zipkin -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-zipkin</artifactId>
+                <version>2.2.8.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>com.yomahub</groupId>
+                <artifactId>tlog-all-spring-boot-starter</artifactId>
+                <version>1.2.4</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>5.6.4</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+</project>

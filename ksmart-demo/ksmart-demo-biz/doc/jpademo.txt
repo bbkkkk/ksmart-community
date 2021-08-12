@@ -1,0 +1,72 @@
+public List<DependenceResult> dependence(String order, String name, String source, Long createId, Long entId) {
+        List<DependenceResult> list = new ArrayList<>();
+        Specification<DataSourceBean> specification = new Specification<DataSourceBean>() {
+            @Override
+            public Predicate toPredicate(Root<DataSourceBean> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                ArrayList<Predicate> list = new ArrayList<>();
+                Path<String> name1 = root.get("name");
+                Path<String> type = root.get("type");
+                Path<Long> entIds = root.get("entId");
+                Path<Long> createby = root.get("createBy");
+                //名称
+                if (StringUtil.isNotBlank(name)) {
+                    list.add(criteriaBuilder.like(name1, "%" + name + "%"));
+                }
+                //类别
+                if (StringUtil.isNotBlank(source)) {
+                    if (source.equals("excel")) {
+                        list.add(criteriaBuilder.equal(type, source));
+                        list.add(criteriaBuilder.equal(type, "online_excel"));
+                    } else {
+                        list.add(criteriaBuilder.equal(type, source));
+                    }
+                }
+                //创建人id
+                if (createId != null) {
+                    list.add(criteriaBuilder.equal(createby, createId));
+                }
+                //企业id
+                if (entId != null) {
+                    list.add(criteriaBuilder.equal(entIds, entId));
+                }
+                //根据创建日期排序
+                if (StringUtil.isNotBlank(order)) {
+                    switch (order) {
+                        case "name_asc":
+                            criteriaQuery.orderBy(criteriaBuilder.asc(root.get("name").as(String.class)));
+                            break;
+                        case "name_desc":
+                            criteriaQuery.orderBy(criteriaBuilder.desc(root.get("name").as(String.class)));
+                               break;
+                        case "time_asc":
+                            criteriaQuery.orderBy(criteriaBuilder.asc(root.get("createDate").as(Date.class)));
+                               break;
+                        case "time_desc":
+                            criteriaQuery.orderBy(criteriaBuilder.desc(root.get("createDate").as(Date.class)));
+                               break;
+                        default:
+                            criteriaQuery.orderBy(criteriaBuilder.desc(root.get("createDate").as(Date.class)));
+                    }
+                } else {
+                    criteriaQuery.orderBy(criteriaBuilder.desc(root.get("createDate").as(Date.class)));
+                }
+                Predicate[] array = new Predicate[list.size()];
+                return criteriaBuilder.and(list.toArray(array));
+            }
+        };
+        List<DataSourceBean> beans = dsService.findAll(specification);
+        for (DataSourceBean bean : beans) {
+            Long fid = iFolderService.findFolderIdByDataId(bean.getId());
+            DependenceResult result = new DependenceResult();
+            result.setId(bean.getId());
+            result.setName(bean.getName());
+            result.setFolderId(fid == null ? -1L : fid);
+            String type = bean.getType();
+            if (bean.getType().equals("online_excel")){
+                type = "excel";
+            }
+            result.setType(type);
+            list.add(result);
+        }
+        return list;
+    }
